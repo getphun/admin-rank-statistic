@@ -1,0 +1,79 @@
+<?php $this->partial('shared/header'); ?>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <strong>International:</strong> <?= number_format($international, 0, '.', '.') ?><br>
+                    <strong>Local:</strong> <?= number_format($local, 0, '.', '.') ?>
+                </div>
+            </div>
+            
+            <div class="list-group">
+                <?php foreach($vendors as $ven => $label): ?>
+                <a href="?vendor=<?= $ven ?>" class="list-group-item<?= ($ven == $vendor ? ' active' : '') ?>"><?= $label ?></a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="page-header">
+                <?php if($this->can_i->update_site_rank): ?>
+                <a class="btn btn-warning pull-right" href="<?= $this->router->to('adminSiteRank', [], ['vendor'=>$vendor, 'refresh'=>1]) ?>">
+                    <i class="fa fa-refresh" aria-hidden="true"></i> Manual Update
+                </a>
+                <?php endif; ?>
+                <h3><?= $title ?></h3>
+            </div>
+            
+            <?php if($ranks): ?>
+            
+            <canvas id="rank-chart"></canvas>
+            <script type="application/chart" id="data-chart"><?= json_encode($ranks); ?></script>
+            
+            <hr>
+            
+            <table class="table table-hover">
+                <thead><tr><th>Date</th><th colspan="2">International</th><th colspan="2">Local</th></thead>
+                <tbody>
+                    <?php foreach($ranks as $index => $rank): ?>
+                        <?php
+                            $next_index = $index + 1;
+                            $next = isset($ranks[$next_index]) ? $ranks[$next_index] : null;
+                            if($next){
+                                $inc_int = $next->international - $rank->international;
+                                $inc_loc = $next->local - $rank->local;
+                                $cls_int = $inc_int > 0 ? 'text-success' : 'text-danger';
+                                $cls_loc = $inc_loc > 0 ? 'text-success' : 'text-danger';
+                            }
+                        ?>
+                    <tr>
+                        <td><?= date('M d, Y', strtotime($rank->created)) ?></td>
+                        <td class="text-right"><?php
+                            if($next && $inc_int){
+                                echo '<span class="' . $cls_int . '">';
+                                echo number_format(abs($inc_int), 0, '.', '.');
+                                echo ' <i class="fa fa-angle-double-' . ($cls_int=='text-success'?'up':'down') . '"></i>';
+                                echo '</span>';
+                            }
+                        ?></td>
+                        <td><?= number_format($rank->international, 0, '.', '.') ?></td>
+                        <td class="text-right"><?php
+                            if($next && $inc_loc){
+                                echo '<span class="' . $cls_loc . '">';
+                                echo number_format(abs($inc_loc), 0, '.', '.');
+                                echo ' <i class="fa fa-angle-double-' . ($cls_loc=='text-success'?'up':'down') . '"></i>';
+                                echo '</span>';
+                            }
+                        ?></td>
+                        <td><?= number_format($rank->local, 0, '.', '.') ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<?php $this->partial('shared/footer'); ?>
