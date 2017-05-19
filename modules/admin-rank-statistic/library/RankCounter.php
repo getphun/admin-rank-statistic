@@ -63,7 +63,7 @@ class RankCounter
     }
     
     static function _fetch_similarweb(){
-        $uri = 'https://www.similarweb.com/website/merahputih.com';// . \Phun::$dispatcher->config->host;
+        $uri = 'https://www.similarweb.com/website/' . \Phun::$dispatcher->config->host;
         
         $cu = curl_init($uri);
         curl_setopt($cu, CURLOPT_RETURNTRANSFER, true);
