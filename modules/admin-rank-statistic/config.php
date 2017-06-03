@@ -12,8 +12,7 @@ return [
     '__git' => 'https://github.com/getphun/admin-rank-statistic',
     '__files' => [
         'modules/admin-rank-statistic'       => [ 'install', 'remove', 'update' ],
-        'theme/admin/statistic/rank'         => [ 'install', 'remove', 'update' ],
-        'theme/admin/static/js/site-rank.js' => [ 'install', 'remove', 'update' ]
+        'theme/admin/statistic/rank'         => [ 'install', 'remove', 'update' ]
     ],
     '__dependencies' => [
         'admin'

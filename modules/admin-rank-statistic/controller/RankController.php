@@ -35,7 +35,6 @@ class RankController extends \AdminController
         
         $vendors = RCounter::$vendors;
         $params['vendors'] = $vendors;
-        $params['jses'] = ['js/site-rank.js'];
         
         $vendor = $this->req->getQuery('vendor');
         if(!$vendor)
