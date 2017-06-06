@@ -3,12 +3,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <strong>International:</strong> <?= number_format($international, 0, '.', '.') ?><br>
-                    <strong>Local:</strong> <?= number_format($local, 0, '.', '.') ?>
-                </div>
-            </div>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr><th>International</th><td><?= number_format($international, 0, '.', '.') ?></td></tr>
+                    <tr><th>Local</th><td><?= number_format($local, 0, '.', '.') ?></td></tr>
+                </tbody>
+            </table>
             
             <div class="list-group">
                 <?php foreach($vendors as $ven => $label): ?>
