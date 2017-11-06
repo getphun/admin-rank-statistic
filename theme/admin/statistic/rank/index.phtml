@@ -51,7 +51,8 @@
                     ]
                 ];
                 
-                foreach($ranks as $rank){
+                $ranks_reversed = array_reverse($ranks);
+                foreach($ranks_reversed as $rank){
                     $label = date('M d', strtotime($rank->created));
                     $chart['labels'][] = $label;
                     $chart['datasets'][0]['data'][] = [ 'x' => $label, 'y' => $rank->international ];
